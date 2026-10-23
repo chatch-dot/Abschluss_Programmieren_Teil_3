@@ -24,23 +24,23 @@ public abstract class Drohne {
     }
 
     public static int getAnzahlGebaut() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        return anzahlGebaut;
     }
 
     public String getSeriennummer() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        return seriennummer;
     }
 
     public String getName() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        return name;
     }
 
     public int getEnergie() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        return energie;
     }
 
     public Koordinate getStandort() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        return standort;
     }
 
     // Was die Unterklassen selbst festlegen (Aufgabe 1.5):
@@ -50,22 +50,42 @@ public abstract class Drohne {
 
     // TODO 1.4: Basisbedarf plus Wetterzuschlag in Prozent, ganzzahlig gerechnet.
     public int energieBedarf(Auftrag auftrag, Wetter wetter) {
-        throw new UnsupportedOperationException("TODO 1.4");
+        int basisBedarf = berechneBasisBedarf(auftrag);
+        int zuschlag = basisBedarf * wetter.getZuschlagProzent() / 100;
+
+        return basisBedarf + zuschlag;
     }
+
 
     // TODO 1.4: true, wenn der Energiebedarf (mit Wetter) hoechstens so gross ist wie die aktuelle Energie.
     public boolean kannDurchfuehren(Auftrag auftrag, Wetter wetter) {
-        throw new UnsupportedOperationException("TODO 1.4");
+        return energieBedarf(auftrag, wetter) <= energie;
     }
 
     // TODO 1.4: Siehe Aufgabenstellung. Schafft sie es nicht: erfolgreich = false, nichts aendert sich.
     public Einsatzergebnis fuehreAus(Auftrag auftrag, Wetter wetter) {
-        throw new UnsupportedOperationException("TODO 1.4");
+            int bedarf = energieBedarf(auftrag, wetter);
+
+            if (bedarf > energie) {
+                return new Einsatzergebnis(false, 0,0, "Nicht genug Energie.");
+            }
+
+            int ertrag = berechneErtrag(auftrag);
+
+            energie -= bedarf;
+            standort = auftrag.ziel();
+
+        return new Einsatzergebnis(
+                true,
+                bedarf,
+                ertrag,
+                "Auftrag erfolgreich ausgeführt."
+        );
     }
 
     // TODO 1.3: Energie wieder voll.
     public void laden() {
-        throw new UnsupportedOperationException("TODO 1.3");
+        energie = maxEnergie;
     }
 
     // TODO 1.6: equals, hashCode und toString nach Aufgabenstellung.

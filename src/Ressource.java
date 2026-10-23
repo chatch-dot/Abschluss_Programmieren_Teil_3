@@ -4,10 +4,13 @@
 public enum Ressource {
     EIS(2), ERZ(5), SILIZIUM(9);
 
-
     private final int wertProEinheit;
-    
-    public int getWertProEinheit() {
-        throw new UnsupportedOperationException("TODO 1.1");
+
+    private Ressource(int wertProEinheit) {
+        this.wertProEinheit = wertProEinheit;
     }
+    public int getWertProEinheit() {
+        return wertProEinheit;
+    }
+
 }

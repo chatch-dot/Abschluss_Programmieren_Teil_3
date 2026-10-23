@@ -2,12 +2,25 @@
 // Die gemeinsame Basis aller Drohnen. Abstrakt: eine "Drohne an sich" gibt es nicht.
 public abstract class Drohne {
 
-    // TODO 1.3: Felder - Seriennummer, Name, maximale Energie, aktuelle Energie, Standort.
-    // TODO 1.3: Ein static Zaehler, wie viele Drohnen insgesamt gebaut wurden.
 
+    // TODO 1.3: Felder - Seriennummer, Name, maximale Energie, aktuelle Energie, Standort.
+    private final String seriennummer;
+    private final String name;
+    private final int maxEnergie;
+    private int energie;
+    private Koordinate standort;
+    // TODO 1.3: Ein static Zaehler, wie viele Drohnen insgesamt gebaut wurden.
+    private static int anzahlGebaut = 0;
     // TODO 1.3: Neue Drohne = volle Energie, Standort Basis, Zaehler um 1 erhoeht.
     protected Drohne(String seriennummer, String name, int maxEnergie) {
-        throw new UnsupportedOperationException("TODO 1.3");
+
+        this.seriennummer = seriennummer;
+        this.name =name;
+        this.maxEnergie = maxEnergie;
+        this.energie = maxEnergie;
+        this.standort = Koordinate.BASIS;
+
+        anzahlGebaut++;
     }
 
     public static int getAnzahlGebaut() {
